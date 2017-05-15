@@ -1,5 +1,6 @@
 import React from 'react';
 import marked from 'marked';
+import './App.css';
 
 class App extends React.Component {
   state = {
@@ -32,6 +33,11 @@ class App extends React.Component {
       flexDirection: "row",
       justifyContent: "space-around"
     };
+    const splitter_bar = {
+      width: "0px",
+      height: "400px",
+      border: "5px solid rgba( 64, 64, 255, 0.5)"
+    };
     return (
       <div style={outer}>
         <h1>Markdown Previewer</h1>
@@ -39,6 +45,7 @@ class App extends React.Component {
           <div>
             <textarea style={ip_text} onChange={this.textChange} value={this.state.text} />
           </div>
+          <div style={splitter_bar} className="splitter_bar"/>
           <div style={marked_up} dangerouslySetInnerHTML={this.createMarkup()} />
         </div>
       </div>
