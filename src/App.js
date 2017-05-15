@@ -15,9 +15,12 @@ class App extends React.Component {
   };
   render = () => {
     const ip_text = {
+      margin: "0 10px",
+      flex: "1 1 auto"
     };
     const marked_up = {
-      width: "400px",
+      margin: "0 10px",
+      flex: "1 1 auto",
       border: "1px solid black"
     };
     const outer = {
@@ -34,7 +37,7 @@ class App extends React.Component {
         <h1>Markdown Previewer</h1>
         <div style={preview_wrapper}>
           <div>
-            <textarea rows="12" cols="40" style={ip_text} onChange={this.textChange} value={this.state.text} />
+            <textarea style={ip_text} onChange={this.textChange} value={this.state.text} />
           </div>
           <div style={marked_up} dangerouslySetInnerHTML={this.createMarkup()} />
         </div>
