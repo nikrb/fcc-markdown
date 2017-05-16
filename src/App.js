@@ -5,7 +5,12 @@ import SplitPane from 'react-split-pane';
 
 class App extends React.Component {
   state = {
-    text: ""
+    text: "",
+    header_height : 0
+  };
+
+  componentDidMount = () => {
+    this.setState( { header_height: document.getElementById('my_header').clientHeight});
   };
   textChange = (e) => {
     this.setState( { text:e.target.value});
@@ -20,20 +25,34 @@ class App extends React.Component {
       display: "flex",
       flexDirection: "column"
     };
-    const preview_wrapper = {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-around"
+    const ta_style = {
+      boxSizing: "border-box",
+      width: "calc( 100% - 20px)",
+      height: "400px",
+      maxHeight: `calc( 100% - ${this.state.header_height}px)`,
+      margin: "0 10px",
+      resize: "none"
+    };
+    const preview_style = {
+      margin: "0 10px",
+      overflowY: "scroll",
+      height: `calc( 100% - ${this.state.header_height}px)`
+    };
+    // FIXME: split pane in container seems to get incorrect height info
+    const split_pane = {
+      maxHeight: `calc( 100% - ${this.state.header_height}px)`
     };
     return (
       <div style={outer}>
-        <h1>Markdown Previewer</h1>
-        <div style={preview_wrapper}>
-          <SplitPane split="vertical" minSize={50} defaultSize={400}>
+        <div id="my_header">
+          <h1>Markdown Previewer</h1>
+        </div>
+        <div>
+          <SplitPane style={split_pane} split="vertical" defaultSize={"50%"}>
             <div>
-              <textarea onChange={this.textChange} value={this.state.text} />
+              <textarea style={ta_style} onChange={this.textChange} value={this.state.text} />
             </div>
-            <div dangerouslySetInnerHTML={this.createMarkup()} />
+            <div style={preview_style} dangerouslySetInnerHTML={this.createMarkup()} ></div>
           </SplitPane>
         </div>
       </div>
