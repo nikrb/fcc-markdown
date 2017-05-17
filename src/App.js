@@ -5,48 +5,47 @@ import SplitPane from 'react-split-pane';
 
 class App extends React.Component {
   state = {
-    text: "",
-    header_height : 0
-  };
-
-  componentDidMount = () => {
-    this.setState( { header_height: document.getElementById('my_header').clientHeight});
+    text: ""
   };
   textChange = (e) => {
     this.setState( { text:e.target.value});
   };
   createMarkup = () => {
     let txt = this.state.text;
-    if( txt === "") txt = "type some text";
+    // if( txt === "") txt = "type some text";
     return { __html: marked( txt)};
   };
   render = () => {
-    const outer = {
-      display: "flex",
-      flexDirection: "column"
-    };
     const ta_style = {
       boxSizing: "border-box",
       width: "calc( 100% - 20px)",
-      height: "400px",
-      maxHeight: `calc( 100% - ${this.state.header_height}px)`,
+      height: "calc( 100vh - 3rem)", // % doesn't work here!
       margin: "0 10px",
       resize: "none"
     };
     const preview_style = {
       margin: "0 10px",
       overflowY: "scroll",
-      height: `calc( 100% - ${this.state.header_height}px)`
+      height: "100%"
     };
     // FIXME: split pane in container seems to get incorrect height info
     const split_pane = {
-      maxHeight: `calc( 100% - ${this.state.header_height}px)`
+      maxHeight: "calc( 100% - 3rem)",
+    };
+    const outer = {
+      display: "flex",
+      flexDirection: "column",
+      flex: "2"
+    };
+    const header = {
+      fontSize: "2rem",
+      fontWeight: "bold",
+      textAlign: "center",
+      height: "3rem"
     };
     return (
       <div style={outer}>
-        <div id="my_header">
-          <h1>Markdown Previewer</h1>
-        </div>
+        <div id="my_header" style={header}>Markdown Previewer</div>
         <div>
           <SplitPane style={split_pane} split="vertical" defaultSize={"50%"}>
             <div>
